@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     let timeSelector: Selector = #selector(ViewController.updateTime)
     let interval = 1.0
     var count = 0
+    var alarmTime: String?
     
     
     override func viewDidLoad() {
@@ -29,6 +30,9 @@ class ViewController: UIViewController {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss EEE" // dateFormat 설정 년-월-일 시간:분 요일
         
         lblPickerTime.text = "선택시간: " + formatter.string(from: datePickerView.date) // label에 선택 시간 포멧에 넣어서 넘겨줌
+        formatter.dateFormat = "hh:mm aaa"
+        alarmTime = formatter.string(from: (datePickerView.date))
+        
     }
     
     @objc func updateTime() { // #selector()인자로 사용될 메소드를 선언할 때, Objective-C 와의 호환성을 위해 @objc 사용
@@ -41,6 +45,15 @@ class ViewController: UIViewController {
         let formatter = DateFormatter() // 데이트 포멧을 위해 선언
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss EEE" // 해당 문자열 형식대로 데이트 포멧 세팅
         lblCurrentTime.text = "현재시간: " + formatter.string(from: date as Date) // 포멧터에 date 값 넣어서 텍스트로 반환
+        
+        formatter.dateFormat = "hh:mm aaa"
+        let currentTime = formatter.string(from: date as Date)
+        print("\(alarmTime), test \(currentTime)")
+        if (alarmTime == currentTime) {
+            view.backgroundColor = UIColor.red
+        }else{
+            view.backgroundColor = UIColor.white
+        }
     }
     
 }
